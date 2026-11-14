@@ -1,0 +1,17 @@
+# intermediate build artifacts (regenerate via common/build.sh)
+out/
+*.o
+*.zip
+
+# large BTF dumps — regenerate from device (see materials/README.md)
+btf_raw.txt
+btf_c.h
+vmlinux_btf
+*.btf
+
+# runtime logs
+boot.log
+
+# NOTE: the packaged module/ (incl. walt_tl.ko) and materials/sched-walt.ko are
+# intentionally committed — module/ is directly installable, materials/ is the
+# adaptation target. Rebuild with common/build.sh + package.sh after editing.
