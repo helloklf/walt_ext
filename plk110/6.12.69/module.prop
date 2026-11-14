@@ -1,0 +1,6 @@
+id=walt_tl
+name=Walt Ext
+version=v1.0
+versionCode=1
+author=嘟嘟ski
+description=Extends the WALT cpufreq governor with additional features.
