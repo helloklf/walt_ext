@@ -30,7 +30,7 @@ wsl -d Ubuntu-24.04 bash common/package.sh plk110/6.12.69      # 组装 KSU 模�
 adb push plk110/6.12.69/module /data/local/tmp/walt_tl_module
 adb shell su -c 'mkdir -p /data/adb/modules/walt_tl \
   && cp -r /data/local/tmp/walt_tl_module/* /data/adb/modules/walt_tl/ \
-  && chmod 755 /data/adb/modules/walt_tl/*.sh && touch /data/adb/walt_tl.enable'
+  && chmod 755 /data/adb/modules/walt_tl/*.sh'
 ```
 
 模块由 service.sh 在 late_start 阶段加载，为每个 WALT policy 挂上 target_loads，默认保留
