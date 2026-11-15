@@ -22,7 +22,11 @@
  *
  * Safety: only cold-path sysfs is added; on exit the groups are removed.
  * Switching the governor away from WALT destroys the tunables kobject, which
- * auto-removes this file (no dangling). Reload the module after switching back.
+ * auto-removes these files (no dangling). Reload the module after switching back.
+ *
+ * Provenance: the target_loads file keeps its canonical name/location (vendor
+ * perf daemons write it). A "walt_tl/version" marker file in a "walt_tl/"
+ * subdirectory next to it identifies the node as module-provided.
  */
 #include "walt_kern.h"
 #include "device.h"
@@ -233,6 +237,28 @@ static const struct attribute_group tl_group = {
 	.attrs	= tl_attrs,
 };
 
+/* ---- provider marker: the target_loads file deliberately keeps its canonical
+ * name and location (vendor perf daemons write it), so it is indistinguishable
+ * by itself. Alongside it we create a "walt_tl/" subdir (named attribute
+ * group) with a read-only "version" file: if <tunables>/walt_tl/version exists,
+ * the adjacent target_loads is provided by this module. A named group works
+ * under the vendor's custom sysfs_ops because the group's kernfs dir stores
+ * priv = the same kobj, so show() still receives the tunables pointer. ---- */
+#define TL_VERSION "1.1"
+static ssize_t tl_version_show(void *t, char *buf)
+{
+	return scnprintf(buf, PAGE_SIZE, "%s %s\n", KBUILD_MODNAME, TL_VERSION);
+}
+static struct kobj_attribute tl_version_attr = {
+	.attr	= { .name = "version", .mode = 0444 },
+	.show	= tl_version_show,
+};
+static const struct attribute *tl_marker_attrs[] = { &tl_version_attr.attr, NULL };
+static const struct attribute_group tl_marker_group = {
+	.name	= "walt_tl",
+	.attrs	= tl_marker_attrs,
+};
+
 /* ---- resolve a symbol's address via a transient kprobe (text symbols) ---- */
 static void *resolve_sym(const char *name)
 {
@@ -358,16 +384,23 @@ int init_module(void)
 
 			ret = sysfs_create_group((struct kobject *)kobj, &tl_group);
 			if (ret == 0) {
+				ret = sysfs_create_group((struct kobject *)kobj,
+							 &tl_marker_group);
+				if (ret)
+					sysfs_remove_group((struct kobject *)kobj,
+							   &tl_group);
+			}
+			if (ret) {
+				pr_err("[%s] sysfs_create_group cpu%d failed: %d\n",
+				       TAG, cpu, ret);
+			} else {
 				recs[nrecs].tunables = t;
 				recs[nrecs].kobj = kobj;
 				recs[nrecs].max_freq = mf;
 				recs[nrecs].active = 1;
 				nrecs++;
-				pr_info("[%s] target_loads added: cpu%d max_freq=%u\n",
+				pr_info("[%s] target_loads + walt_tl marker added: cpu%d max_freq=%u\n",
 					TAG, cpu, mf);
-			} else {
-				pr_err("[%s] sysfs_create_group cpu%d failed: %d\n",
-				       TAG, cpu, ret);
 			}
 		}
 		cpufreq_cpu_put(pol);
@@ -389,6 +422,7 @@ void cleanup_module(void)
 	int i;
 	for (i = 0; i < nrecs; i++) {
 		if (recs[i].active) {
+			sysfs_remove_group((struct kobject *)recs[i].kobj, &tl_marker_group);
 			sysfs_remove_group((struct kobject *)recs[i].kobj, &tl_group);
 			recs[i].active = 0;
 		}
@@ -399,6 +433,7 @@ void cleanup_module(void)
 PLK_MODULE_INFO(description, "Per-frequency-band target_loads for " DEVICE_DESC);
 PLK_MODULE_INFO(license, "GPL");
 PLK_MODULE_INFO(name, "walt_tl");
+PLK_MODULE_INFO(version, TL_VERSION);
 PLK_MODULE_INFO(depends, "");
 PLK_MODULE_INFO(vermagic, PLK_VERMAGIC);
 PLK_MODULE_INFO(parmtype, "selftest:uint");
