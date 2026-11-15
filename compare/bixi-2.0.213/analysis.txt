@@ -1,0 +1,76 @@
+== vermagic / modinfo strings ==
+/usr/bin/bash: line 3: strings: command not found
+
+== kCFI preambles (vendor zone show/store) ==
+zone_max_util_pct_show           NOT FOUND
+zone_max_util_pct_store          NOT FOUND
+
+== import symbol CRCs (count + key entries) ==
+# ko_out/sched-walt.ko: 339 CRCs
+kobject_put = 0x0e5ae00d
+_printk = 0x92997ed8
+scnprintf = 0x96848186
+snprintf = 0x656e4a6e
+total symbols: 56
+module_layout = 0x4e276f37
+
+== BTF struct offsets ==
+struct module {  // size=1536
+struct kprobe {  // size=128
+struct kernel_param {  // size=40
+struct kernel_param_ops {  // size=32
+struct attribute_group {  // size=40
+struct cpufreq_policy {  // size=760
+
+== governor / tunables symbol names ==
+/usr/bin/bash: line 17: strings: command not found
+465149b029cb93ee71953d617901c01915776b338a0bc2f239ad6f68c978c609 *ko_out/sched-walt.ko
+== kCFI preambles (Xiaomi native target_loads show/store) ==
+target_loads_show                preamble = 0x7fdc93ec
+target_loads_store               preamble = 0x32a83d47
+
+== scaling governor / walt sysfs on device ==
+--- /sys/devices/system/cpu/cpufreq/policy*
+walt
+walt
+3532800
+4320000
+556800
+1017600
+
+/sys/devices/system/cpu/cpufreq/policy0/walt:
+adaptive_high_freq
+adaptive_level_1
+adaptive_low_freq
+boost
+down_rate_limit_us
+hispeed_cond_freq
+hispeed_freq
+hispeed_load
+pl
+rtg_boost_freq
+target_load_shift
+target_load_thresh
+target_loads
+up_rate_limit_us
+
+/sys/devices/system/cpu/cpufreq/policy6/walt:
+adaptive_high_freq
+adaptive_level_1
+adaptive_low_freq
+boost
+down_rate_limit_us
+hispeed_cond_freq
+hispeed_freq
+hispeed_load
+pl
+rtg_boost_freq
+target_load_shift
+target_load_thresh
+target_loads
+up_rate_limit_us
+target_loads: -3 918884:-6 1088387:-13
+hispeed_load: 90
+hispeed_freq: 748800
+target_load_shift: 2
+target_load_thresh: 1024

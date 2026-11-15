@@ -1,0 +1,5 @@
+sched_walt            606208  13 qca_cld3_peach_v2,rmnet_shs,qcom_lpm,mi_cam,migt,bwmon,ufs_qcom,perf_helper,cpucp_fast,thermal_pause,msm_performance,[permanent]
+socinfo                53248  6 camera,machine_dlkm,msm_kgsl,icc_rpmh,hwid,sched_walt
+metis                 610304  4 msm_drm,migt,speed_touch,sched_walt
+mist                  106496  7 msm_kgsl,migt,governor_msm_adreno_tz,memlat,bwmon,sched_walt,metis
+mi_schedule            73728  3 migt,sched_walt,metis

@@ -1,0 +1,7 @@
+sched_walt            618496  12 qca_cld3_peach_v2,rmnet_shs,qcom_lpm,bwmon,ufs_qcom,cpucp_fast,mi_game,perf_helper,thermal_pause,msm_performance,[permanent]
+mist                  106496  6 msm_kgsl,governor_msm_adreno_tz,bwmon,memlat,mi_game,sched_walt
+rtg                    20480  1 sched_walt,[permanent]
+socinfo                53248  6 machine_dlkm,camera,msm_kgsl,icc_rpmh,hwid,sched_walt
+xr_qi                 258048  8 msm_drm,msm_kgsl,mi_reclaim,cpq,mi_low_lat_mem,mi_wq_dynamic_priority,xr_qs,sched_walt,[permanent]
+vip_sched              77824  4 mi_game,xr_qs,sched_walt,xr_qi,[permanent]
+plat_common            32768  6 mi_game,xr_qs,sched_walt,rtg,xr_qi,vip_sched

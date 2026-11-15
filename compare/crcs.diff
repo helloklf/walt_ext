@@ -1,0 +1,102 @@
+45a46
+> __trace_bprintk = 0xa20d01ba
+96a98
+> _find_first_zero_bit = 0x7b37d4a7
+169a172
+> find_vip_preempt_cpu = 0xefd84d36
+175,176d177
+< get_cpu_util = 0xe78f8445
+< get_cpu_util_without = 0xa6b0b6eb
+196a198
+> is_vip_task = 0x00711c49
+226,246d227
+< metis_choose_cpu_fastpath = 0x68c5890d
+< metis_coldstart_rt_find_lowest_rq = 0xdd445ccf
+< metis_coldstart_skip_lb = 0x7e6d0f08
+< metis_coldstart_skip_thiscpu_rt = 0x15e7ef32
+< metis_coldstart_spread_rt_task = 0x4d03ccb7
+< metis_lb_check_for_higher_capacity = 0xe9712c7c
+< metis_lb_cpu_array = 0xc02be175
+< metis_lb_cpu_halt_mask = 0x2ebd9731
+< metis_lb_cpu_overutilized = 0xc7ed1df9
+< metis_lb_find_busiest_cpu = 0xa9d4447e
+< metis_lb_min_possible_cluster_id = 0xf77f35dc
+< metis_lb_pull_tasks = 0x195c5041
+< metis_schlat_schedule_hook = 0x80895887
+< metis_tp_check_cpu_layered_load = 0x04c6087d
+< metis_tp_fixup_cumulative_runnable_avg_hook = 0xb9faba5c
+< metis_tp_is_vip_task = 0xed64bcb4
+< metis_tp_mi_viptask_balance = 0x7aa39c7c
+< metis_tp_walt_find_best_target_hook = 0xcab5e77c
+< metis_update_top_task_info = 0xff972b99
+< mi_check_preempt_wakeup_hook = 0x45387c94
+< mi_dequeue_task_fair_func = 0x96b579a0
+248,257d228
+< mi_disable_qcom_pipeline = 0xdb3b8f86
+< mi_enqueue_task_fair_func = 0x8af93f43
+< mi_pick_next_task_fair_hook = 0x4202567d
+< mi_schedule_hook = 0x02246b5a
+< mi_scheduler_tick_hook = 0xed939f8c
+< mi_select_task_rq_fair = 0xebe7ad62
+< mi_task_fork = 0x8a1f9c93
+< mi_try_to_wake_up_func = 0xcd56e0d9
+< mi_wake_up_new_task_hook = 0x631cb06a
+< mi_walt_get_indicies_func = 0xda98c7e6
+264,266d234
+< oem_rvh_try_to_wake_up_success = 0x5a1d758e
+< oem_should_update_freq = 0xd0920f7a
+< oem_update_num_sched_clusters = 0x8763fc2a
+271a240,246
+> os_cpu_android_vh_alter_mutex_list_add = 0x9d2d27c9
+> os_cpu_can_migrate_task = 0x60f92d58
+> os_cpu_get_group_prefer_cpus = 0x3eda29ad
+> os_cpu_get_group_prefer_util = 0xf3083966
+> os_cpu_init_rtg_grp_prefer_cpus = 0xb79f378c
+> os_cpu_is_task_prefer_cpu = 0x823d52bf
+> param_ops_int = 0xa8d76d3d
+276c251,271
+< pkg_enable = 0x868c569a
+---
+> plat_enable_gpsync = 0x0dcb57d0
+> plat_flt_enable = 0x1ca68e3c
+> plat_game_check_rt = 0x8e526077
+> plat_game_choose_cpu = 0xf4900752
+> plat_game_choose_cpu_fastpath = 0x1020db70
+> plat_game_choose_exclusive_cpus = 0x5d50bee6
+> plat_game_get_ravg_window = 0x85599b3c
+> plat_game_should_skip_cpu_rt = 0x96d4a84b
+> plat_game_should_skip_migrate = 0x607cc05c
+> plat_game_skip_cpus = 0x91105ab0
+> plat_game_skip_cpus_rt = 0xc5a1f792
+> plat_game_vip_check = 0xbbb12ecb
+> plat_get_wakeup_info = 0x844181c0
+> plat_mi_force_update_freq = 0x245857a5
+> plat_mi_game_find_energy_hook = 0x5cd5852b
+> plat_mi_game_scheduler_tick = 0x8752fd6a
+> plat_mi_game_task_fork = 0x3126b6eb
+> plat_mi_game_walt_get_indicies = 0xa5b07ed7
+> plat_mi_set_next_freq = 0x60d4366b
+> plat_update_frame_load = 0x872bcfba
+> plat_update_pkg_load = 0xb98d806e
+289c284
+< register_corectl_boost_hook = 0x120d6a5e
+---
+> register_plat_func = 0x8f437702
+292d286
+< render_run_cpu = 0x5a4fae99
+297d290
+< sched_boost_should_disable = 0x3698eabd
+352d344
+< update_pkg_load = 0x9d90ec50
+354a347,355
+> vip_init_rq = 0x6b145dcd
+> vip_init_task = 0x0e7451eb
+> vip_sched_check_preempt_wakeup = 0x44f34b5c
+> vip_sched_dequeue_task_fair = 0x159902b3
+> vip_sched_enqueue_task_fair = 0x5ca054a4
+> vip_sched_newidle_balance = 0xba0f11e6
+> vip_sched_replace_next_task_fair = 0xf22aecee
+> vip_sched_schedule = 0xca670d87
+> vip_sched_scheduler_tick = 0x80aa93f9
+356d356
+< wake_render_func = 0xcc4dae27

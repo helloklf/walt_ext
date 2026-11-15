@@ -1,0 +1,8 @@
+bixi
+2505APX7BC
+Xiaomi/bixi/bixi:15/AQ3A.241229.001/OS2.0.213.0.VOHCNXM:user/release-keys
+AQ3A.241229.001
+15
+OS2.0.213.0.VOHCNXM
+
+_a
