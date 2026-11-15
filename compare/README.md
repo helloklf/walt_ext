@@ -52,14 +52,28 @@ cpufreq / sched_walt 指纹），PC 侧解包 + `extract_crcs.py` / `read_preamb
 ## 运行时指纹：scmversion
 
 `/sys/module/sched_walt/scmversion`（Xiaomi/Qualcomm 的 vendor 补丁字段，mainline 只有
-srcversion）记录**该模块自身源码树**的 commit 哈希，实测两台机器都与 ko vermagic 的
-`-g<hash>` 后缀一致；且与内核镜像的 commit 不同（vendor 模块钉在自己的树上）。
-相比 srcversion（两台机器均为空），它在这里是可用的 sched-walt 源码级指纹。
+srcversion）是**运行时可直接读取的 sched-walt 指纹**。bixi/dada（Xiaomi 6.6）上它与 ko
+vermagic 的 `-g<hash>` 后缀恰好一致，但 hongkong（Xiaomi 6.18）、PD2505（vivo 6.12）、
+plk110（oneplus 6.12）实测**均不一致**：真机解包的 sched-walt.ko 与 materials 逐字节相同
+（sha256 一致），vermagic -g 却是另一个值（hongkong g32de9749 vs scmversion gd9056cdb9；
+vivo gfd60568f1f3a vs scmversion gecc8afbc085b-dirty；oneplus gb79517a1cbef vs
+srcversion g5e68b11425ae——该机器 scmversion 节点存在但为空，指纹实际来自 srcversion），
+而运行时 walt_tl 均验证适用。因此 scmversion/srcversion 是独立记录的不透明指纹，
+**不能从 ko vermagic 的 -g 后缀推导**，映射关系只能真机验证建立；同一台机器上内核
+`-g`（uname）、模块 vermagic `-g`、scmversion/srcversion 三者可以互不相同。
+探针顺序：scmversion（为空则回退）→ srcversion。
 
 局限：源码级而非二进制级——同 commit 换工具链/编译参数重编，scmversion 不变但结构偏移
 可能变。因此运行时判定键用 (机型, fingerprint, scmversion) 三元组，全量 sha256
 （dd vendor_boot）留作标定基准与抽查。新机型先跑 dump_device.sh 探明有 scmversion
 还是只有 srcversion（探针顺序：scmversion → srcversion → 无，退回 fingerprint+kver）。
+
+各机型 `config.sh` 里的 `SCHED_WALT_SCMVERSION`（空格分隔列表）是这一策略的落地：
+真机验证过的运行时 scmversion 值，云端以命中列表为下发条件。注意真机值只能从设备
+读取，标定 ko vermagic 的 `-g` 后缀在部分机型上与 scmversion 不一致（见上文
+hongkong 反例），不可互相推导。hongkong 验证过一个反直觉样本：vendor 从脏树重建
+WALT（`-dirty` 后缀）后 walt_tl 仍适用，说明偏移不随同树重编漂移——但每个新指纹
+值仍需真机验证后才加入列表。
 
 ## 纵向跟踪（OS2 → OS3 → OS4）
 

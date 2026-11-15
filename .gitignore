@@ -17,6 +17,12 @@ compare/*/vendor_boot.img
 compare/*/ramdisk
 compare/*/ramdisk.cpio
 
+# staged server artifacts — regenerate via build-all.sh
+kernel_modules/
+
+# universal KSU module — regenerate via build-all.sh
+dist/
+
 # NOTE: the packaged module/ (incl. walt_tl.ko) and materials/sched-walt.ko are
 # intentionally committed — module/ is directly installable, materials/ is the
 # adaptation target. Rebuild with common/build.sh + package.sh after editing.

@@ -45,6 +45,8 @@ tools/                   素材收割工具
   materials/             目标 .ko 与定标记录
   README.md              机型文档
 compare/                 跨机型/跨版本对比实验素材与报告（见 compare/README.md）
+kernel_modules/          服务器下发产物树（build-all.sh 生成，gitignore）：brand/内核版本/scmversion.ko
+build-all.sh             批量构建全部机型并归集产物 + MANIFEST.tsv
 ```
 
 通用逻辑集中在 common/。适配新机型一般只需新增一个 `<机型>/<内核>/` 目录，填写
@@ -60,6 +62,17 @@ wsl -d Ubuntu-24.04 bash common/package.sh plk110/6.12.69
 产物在 `plk110/6.12.69/module/`，安装到 `/data/adb/modules/walt_tl`，步骤见各机型 README。
 模块通过 KSU 的 service.sh（late_start 阶段）加载，该阶段 root 已就绪，对永久 root 和
 临时 root 都适用。
+
+批量构建与下发产物：`bash build-all.sh`（Git Bash 下自动转入 WSL 执行）会把全部机型
+构建并归集到 `kernel_modules/<brand>/<内核版本>/<sched-walt scmversion>.ko`，同时生成
+`kernel_modules/MANIFEST.tsv`（brand / kernel_release / scmversion / sha256 / path）。
+服务器按客户端上报的 (brand, uname -r, /sys/module/sched_walt/scmversion) 三元组查
+manifest，命中才下发，匹配不到不下发。
+
+同一脚本还会组装通用 KSU 模块 `dist/walt_tl/` 并打包为 `dist/walt_tl-universal.zip`：
+模块内含全部机型的 ko 树，service.sh 开机时自动按 (brand, uname -r, scmversion)
+三元组选择匹配的 ko 加载；scmversion 读取不到时退化为"该 (brand, 内核版本) 下唯一
+ko"；无匹配则安静跳过（不加载 = 原生行为）。模板在 `common/module_universal/`。
 
 ## 适配新机型
 
