@@ -44,8 +44,8 @@ adb shell su -c 'mkdir -p /data/adb/modules/walt_tl \
 ```
 
 模块由 service.sh 在 late_start 阶段加载，挂上 target_loads，默认保留内核原有设定。
-target_loads 保持标准名称与位置（厂商性能服务会直接写它）；同目录出现 `walt_tl/` 目录
-（内有只读 `version`，输出 `walt_tl <版本>`）即表示该节点由本模块提供。
+target_loads 保持标准名称与位置（厂商性能服务会直接写它）；模块加载后
+`cat /sys/module/walt_tl/version`（模块核心自动生成）即确认该节点由本模块提供。
 
 ## 验证
 

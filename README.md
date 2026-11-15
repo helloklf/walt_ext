@@ -104,8 +104,9 @@ ko"；无匹配则安静跳过（不加载 = 原生行为）。模板在 `common
 - 仅新增冷路径 sysfs，模块退出时移除属性组。切换 governor 会销毁 tunables kobject，
   target_loads 文件随之移除，不会悬空。
 - target_loads 保持标准名称与位置（厂商性能服务会直接写它）。为便于区分节点归属，
-  模块在每个 policy 的 walt 目录下额外创建 `walt_tl/version` 只读标记；`ls` 到 `walt_tl/`
-  目录即表明旁边的 target_loads 由本模块提供。
+  不在 vendor 目录放任何标记文件：模块加载后 `cat /sys/module/walt_tl/version`
+  （模块核心依据 modinfo version 自动生成）即可确认归属与版本；历史上在 tunables
+  目录加命名组标记曾在 6.6 上读即崩，已彻底移除。
 - 模块只提供 target_loads 接口，默认保留内核原有设定，不做开机配置。运行时写入 sysfs
   需要相应的 SELinux 权限（ksu:s0 默认没有，厂商性能服务有）。
 - 偏移或结构体布局错误可能导致崩溃，适配时先用 walt_diag 只读定标，再启用 sysfs。

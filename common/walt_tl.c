@@ -25,8 +25,10 @@
  * auto-removes these files (no dangling). Reload the module after switching back.
  *
  * Provenance: the target_loads file keeps its canonical name/location (vendor
- * perf daemons write it). A "walt_tl/version" marker file in a "walt_tl/"
- * subdirectory next to it identifies the node as module-provided.
+ * perf daemons write it). Module provenance is identified via
+ * /sys/module/walt_tl/version (auto-created by the module core from the
+ * modinfo version tag) — no marker files are added to the vendor tunables
+ * kobject at all; an early named-group marker there proved fatal on 6.6.
  */
 #include "walt_kern.h"
 #include "device.h"
@@ -237,27 +239,17 @@ static const struct attribute_group tl_group = {
 	.attrs	= tl_attrs,
 };
 
-/* ---- provider marker: the target_loads file deliberately keeps its canonical
- * name and location (vendor perf daemons write it), so it is indistinguishable
- * by itself. Alongside it we create a "walt_tl/" subdir (named attribute
- * group) with a read-only "version" file: if <tunables>/walt_tl/version exists,
- * the adjacent target_loads is provided by this module. A named group works
- * under the vendor's custom sysfs_ops because the group's kernfs dir stores
- * priv = the same kobj, so show() still receives the tunables pointer. ---- */
-#define TL_VERSION "1.1"
-static ssize_t tl_version_show(void *t, char *buf)
-{
-	return scnprintf(buf, PAGE_SIZE, "%s %s\n", KBUILD_MODNAME, TL_VERSION);
-}
-static struct kobj_attribute tl_version_attr = {
-	.attr	= { .name = "version", .mode = 0444 },
-	.show	= tl_version_show,
-};
-static const struct attribute *tl_marker_attrs[] = { &tl_version_attr.attr, NULL };
-static const struct attribute_group tl_marker_group = {
-	.name	= "walt_tl",
-	.attrs	= tl_marker_attrs,
-};
+/* Provenance: NOT a sysfs marker in the vendor tunables dir. The module core
+ * auto-creates /sys/module/walt_tl/version from the modinfo "version=" tag
+ * (added below), and /sys/module/walt_tl/parameters/selftest from the module
+ * param — both live in module-owned space with the standard module ktype.
+ * HARD-WON LESSON: any extra file we add to the vendor tunables kobject goes
+ * through the vendor's custom sysfs_ops. A named-group marker ("walt_tl/version"
+ * subdirectory) killed the kernel on 6.6 at read time (the named-group dir's
+ * kernfs priv is not the vendor kobject there, so show() got a bogus tunables
+ * pointer). We now add NOTHING beyond target_loads itself; users verify
+ * provenance via /sys/module/walt_tl/version alongside the target_loads file. */
+#define TL_VERSION "1.3"
 
 /* ---- resolve a symbol's address via a transient kprobe (text symbols) ---- */
 static void *resolve_sym(const char *name)
@@ -383,13 +375,6 @@ int init_module(void)
 			unsigned int mf = pol->cpuinfo.max_freq;
 
 			ret = sysfs_create_group((struct kobject *)kobj, &tl_group);
-			if (ret == 0) {
-				ret = sysfs_create_group((struct kobject *)kobj,
-							 &tl_marker_group);
-				if (ret)
-					sysfs_remove_group((struct kobject *)kobj,
-							   &tl_group);
-			}
 			if (ret) {
 				pr_err("[%s] sysfs_create_group cpu%d failed: %d\n",
 				       TAG, cpu, ret);
@@ -399,7 +384,7 @@ int init_module(void)
 				recs[nrecs].max_freq = mf;
 				recs[nrecs].active = 1;
 				nrecs++;
-				pr_info("[%s] target_loads + walt_tl marker added: cpu%d max_freq=%u\n",
+				pr_info("[%s] target_loads added: cpu%d max_freq=%u\n",
 					TAG, cpu, mf);
 			}
 		}
@@ -422,7 +407,6 @@ void cleanup_module(void)
 	int i;
 	for (i = 0; i < nrecs; i++) {
 		if (recs[i].active) {
-			sysfs_remove_group((struct kobject *)recs[i].kobj, &tl_marker_group);
 			sysfs_remove_group((struct kobject *)recs[i].kobj, &tl_group);
 			recs[i].active = 0;
 		}
