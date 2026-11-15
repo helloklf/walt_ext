@@ -30,6 +30,7 @@ common/                  跨机型共享代码
   build.sh / build_diag.sh / package.sh / module.lds
   module/                KSU 脚本模板（service.sh）
 tools/                   素材收割工具
+  dump_device.sh         连接测试机一键采集内核/WALT 素材到 compare/<机型>-<版本>/
   extract_crcs.py        从 .ko 提取导入符号 CRC
   read_preamble.py       读函数 kCFI 前导哈希
   btf_offsets.py         从 BTF 读结构体成员偏移
@@ -43,6 +44,7 @@ tools/                   素材收割工具
   module.prop            KSU 元数据
   materials/             目标 .ko 与定标记录
   README.md              机型文档
+compare/                 跨机型/跨版本对比实验素材与报告（见 compare/README.md）
 ```
 
 通用逻辑集中在 common/。适配新机型一般只需新增一个 `<机型>/<内核>/` 目录，填写

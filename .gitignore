@@ -12,6 +12,11 @@ vmlinux_btf
 # runtime logs
 boot.log
 
+# compare/ large raw dumps — regenerate via tools/dump_device.sh
+compare/*/vendor_boot.img
+compare/*/ramdisk
+compare/*/ramdisk.cpio
+
 # NOTE: the packaged module/ (incl. walt_tl.ko) and materials/sched-walt.ko are
 # intentionally committed — module/ is directly installable, materials/ is the
 # adaptation target. Rebuild with common/build.sh + package.sh after editing.
