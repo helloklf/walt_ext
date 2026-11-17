@@ -122,6 +122,7 @@ ko"；无匹配则安静跳过（不加载 = 原生行为）。模板在 `common
 | Xiaomi 18 Pro（M610BB，8 Elite 6） | HyperOS 4 | 6.18.21-android17 | 已验证：selftest、真实写入；6.18 结构体/BTI 适配，zones 偏移 0xd8；持久化按临时 root 流程触发 |
 | OnePlus 13（PJZ110，8 Elite） | ColorOS 17 | 6.6.118-android15 | 已验证：selftest、真实写入；6.6 结构体/kCFI 方案/BTI，降序 zone + write-once 守卫处理 |
 | OnePlus 16（PYB110 OP64E1L1，SM8850 系列） | ColorOS 17 | 6.18.21-android17 | 已验证：selftest、真实写入；离机采集 + 反汇编/BTF 定标，zones 偏移 0xd8，无运行时指纹 |
+| OnePlus ACE7 Pro（PMS110 OP64F1L1，SM8850 系列） | ColorOS 17 | 6.12.69-android16 | 离机预适配（dump 采集 + 反汇编/BTF 定标），zones 偏移 0xe0，scmversion g0e19e9baeede；未真机验证 |
 
 ## 协议
 
