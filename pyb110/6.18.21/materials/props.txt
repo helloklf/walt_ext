@@ -1,0 +1,9 @@
+ro.product.device: OP64E1L1
+ro.product.model: PYB110
+ro.product.brand: OnePlus
+ro.build.fingerprint: OnePlus/PYB110/OP64E1L1:17/CP2A.260605.016/C.3601857-f47121-f4775e:user/release-keys
+ro.build.display.id: PYB110_17.0.1.201(CN01)
+ro.system.build.version.release: 17
+ro.system.build.version.incremental: 1793346101331
+ro.vendor.build.security.patch: 
+ro.boot.slot_suffix: _a

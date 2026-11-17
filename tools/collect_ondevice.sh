@@ -52,7 +52,13 @@ lsmod 2>/dev/null | grep -i walt > "$OUT/lsmod_walt.txt"
 lsmod > "$OUT/lsmod_full.txt" 2>/dev/null
 ls /sys/module/ 2>/dev/null | grep -i walt > "$OUT/sys_module_walt.txt"
 for f in version srcversion scmversion; do
-  cat "/sys/module/sched_walt/$f" > "$OUT/walt_module_$f.txt" 2>/dev/null
+  node="/sys/module/sched_walt/$f"
+  if [ -e "$node" ]; then
+    val=$(cat "$node" 2>/dev/null)
+    echo "${val:-<empty>}" > "$OUT/walt_module_$f.txt"
+  else
+    echo "<missing>" > "$OUT/walt_module_$f.txt"
+  fi
 done
 # on-filesystem walt .ko (not present when it lives in vendor_boot ramdisk)
 find /vendor /odm /system /vendor_dlkm /odm_dlkm -name '*walt*.ko' 2>/dev/null \
@@ -97,6 +103,7 @@ LOG "== cpufreq / walt sysfs =="
     echo "governor: $(cat "$p/scaling_governor" 2>/dev/null)"
     echo "cpuinfo_max_freq: $(cat "$p/cpuinfo_max_freq" 2>/dev/null)"
     echo "scaling_max_freq: $(cat "$p/scaling_max_freq" 2>/dev/null)"
+    echo "available_frequencies: $(cat "$p/scaling_available_frequencies" 2>/dev/null)"
     if [ -d "$p/walt" ]; then
       echo "walt nodes: $(ls "$p/walt" 2>/dev/null | tr '\n' ' ')"
       echo "zone_max_util_pct: $(cat "$p/walt/zone_max_util_pct" 2>/dev/null)"

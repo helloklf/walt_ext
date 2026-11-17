@@ -18,7 +18,7 @@ if ! grep -qi microsoft /proc/version 2>/dev/null; then
   exec wsl -d Ubuntu-24.04 bash "$wsl_path" "$@"
 fi
 
-DEVICES=(hongkong/6.18.21 iqoo15/6.12.58 pjz110/6.6.118 plk110/6.12.69)
+DEVICES=(hongkong/6.18.21 iqoo15/6.12.58 pjz110/6.6.118 plk110/6.12.69 pyb110/6.18.21)
 OUT=kernel_modules
 rm -rf "$OUT"
 mkdir -p "$OUT"

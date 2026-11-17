@@ -1,0 +1,6 @@
+sched_walt            581632  14 qca_cld3_fig_v2,rmnet_shs,msm_kgsl,oplus_bsp_task_load,cpu_mpam,msm_performance,bwmon,qcom_lpm,ufs_qcom,cpucp_fast,thermal_pause,[permanent]
+oplus_bsp_task_overload    77824  1 sched_walt,[permanent]
+oplus_bsp_frame_boost   131072  4 oplus_bsp_task_sched,ua_cpu_ioctl,sched_walt,oplus_bsp_task_overload,[permanent]
+socinfo                61440  7 msm_video,msm_kgsl,msm_drm,machine_dlkm,camera,icc_rpmh,sched_walt
+cpufreq_bouncing       32768  1 sched_walt
+oplus_bsp_sched_assist  1007616  14 oplus_bsp_dynamic_readahead,oplus_lock_torture,oplus_binder_strategy,oplus_bsp_sched_ext,oplus_locking_strategy,oplus_bsp_schedinfo,oplus_powermodel,oplus_bsp_zram_opt,oplus_bsp_uxmem_opt,zram,sched_walt,oplus_bsp_task_overload,oplus_bsp_frame_boost,oplus_wq_dynamic_priority,[permanent]

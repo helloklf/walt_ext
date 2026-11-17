@@ -1,0 +1,8 @@
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 boot_a -> /dev/block/sde21
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 boot_b -> /dev/block/sde74
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 init_boot_a -> /dev/block/sde40
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 init_boot_b -> /dev/block/sde95
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 vendor_boot_a -> /dev/block/sde34
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 vendor_boot_b -> /dev/block/sde90
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 vm-bootsys_a -> /dev/block/sde30
+lrwxrwxrwx 1 root root 16 1970-01-20 16:38 vm-bootsys_b -> /dev/block/sde83

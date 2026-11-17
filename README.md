@@ -31,6 +31,8 @@ common/                  跨机型共享代码
   module/                KSU 脚本模板（service.sh）
 tools/                   素材收割工具
   dump_device.sh         连接测试机一键采集内核/WALT 素材到 compare/<机型>-<版本>/
+  collect_ondevice.sh    设备端（root 直跑）一键采集同款素材并打包到 /sdcard，
+                         机主代采/离机适配用
   extract_crcs.py        从 .ko 提取导入符号 CRC
   read_preamble.py       读函数 kCFI 前导哈希
   btf_offsets.py         从 BTF 读结构体成员偏移
@@ -119,6 +121,7 @@ ko"；无匹配则安静跳过（不加载 = 原生行为）。模板在 `common
 | iQOO 15（V2505A，SM8850） | OriginOS 7 | 6.12.58-android16 | 已验证：selftest、真实写入；zones 偏移 0xf8；持久化按临时 root 流程触发 |
 | Xiaomi 18 Pro（M610BB，8 Elite 6） | HyperOS 4 | 6.18.21-android17 | 已验证：selftest、真实写入；6.18 结构体/BTI 适配，zones 偏移 0xd8；持久化按临时 root 流程触发 |
 | OnePlus 13（PJZ110，8 Elite） | ColorOS 17 | 6.6.118-android15 | 已验证：selftest、真实写入；6.6 结构体/kCFI 方案/BTI，降序 zone + write-once 守卫处理 |
+| OnePlus 16（PYB110 OP64E1L1，SM8850 系列） | ColorOS 17 | 6.18.21-android17 | 已验证：selftest、真实写入；离机采集 + 反汇编/BTF 定标，zones 偏移 0xd8，无运行时指纹 |
 
 ## 协议
 
