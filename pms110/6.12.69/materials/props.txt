@@ -1,0 +1,9 @@
+ro.product.device: OP64F1L1
+ro.product.model: PMS110
+ro.product.brand: OnePlus
+ro.build.fingerprint: OnePlus/PMS110/OP64F1L1:17/CP2A.260605.016/C.347f032-d78284-d78282:user/release-keys
+ro.build.display.id: PMS110_17.0.0.201(CN01)
+ro.system.build.version.release: 17
+ro.system.build.version.incremental: 1750043092353
+ro.vendor.build.security.patch: 
+ro.boot.slot_suffix: _a

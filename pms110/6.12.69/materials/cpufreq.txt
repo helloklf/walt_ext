@@ -1,0 +1,14 @@
+--- /sys/devices/system/cpu/cpufreq/policy0
+governor: walt
+cpuinfo_max_freq: 3628800
+scaling_max_freq: 3628800
+walt nodes: adaptive_high_freq adaptive_level_1 adaptive_low_freq boost down_rate_limit_us hispeed_cond_freq hispeed_freq hispeed_load pl rtg_boost_freq up_rate_limit_us zone_max_util_pct 
+zone_max_util_pct: 2611200 90 
+target_loads: 
+--- /sys/devices/system/cpu/cpufreq/policy6
+governor: walt
+cpuinfo_max_freq: 4608000
+scaling_max_freq: 4608000
+walt nodes: adaptive_high_freq adaptive_level_1 adaptive_low_freq boost down_rate_limit_us hispeed_cond_freq hispeed_freq hispeed_load pl rtg_boost_freq up_rate_limit_us zone_max_util_pct 
+zone_max_util_pct: 2147483647 80
+target_loads: 
